@@ -21,7 +21,6 @@ func Import_Document_In(sourceID string) error {
 	if err != nil {
 		return errors.New("Error (IU-030101): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(documentData)
 
 	status := strconv.Itoa(documentData.Status)
 	switch documentData.Status {
@@ -31,7 +30,6 @@ func Import_Document_In(sourceID string) error {
 		status = "Received"
 	default:
 	}
-	//fmt.Println(status)
 
 	data64 := documentData.Content.Content
 
@@ -40,7 +38,6 @@ func Import_Document_In(sourceID string) error {
 	if err != nil {
 		return errors.New("Error (IU-030102): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Printf("sDec: %s\n", sDec)
 
 	// строка в win-1251
 	sr := strings.NewReader(string(sDec))
@@ -61,24 +58,20 @@ func Import_Document_In(sourceID string) error {
 	if i > 0 {
 		filename = filename[:i]
 	}
-	//fmt.Println(filename)
 
 	// произвольный GUID на случай отсутствия его в имени файла
 	file_id := uuid.NewV4()
 	file_id_string := file_id.String()
-	//fmt.Println(file_id_string)
 
 	l := len(filename)
 	if l >= 36 {
 		tmpS := filename[(l - 36):]
-		//fmt.Println(tmpS)
 
 		// если удалось создать GUID из имени файла - используем его
 		u1, err := uuid.FromString(tmpS)
 		if err == nil {
 			file_id_string = u1.String()
 		}
-		//fmt.Println(file_id_string)
 	}
 
 	// ----- записываем в sql информацию о полученном документе -----

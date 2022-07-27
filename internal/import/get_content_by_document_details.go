@@ -17,7 +17,6 @@ func GetContentByDocumentDetails(sourceID string) (string, error) {
 	if err != nil {
 		return "", errors.New("Error (IU-020101): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(documentData)
 
 	data64 := documentData.Content.Content
 
@@ -26,7 +25,6 @@ func GetContentByDocumentDetails(sourceID string) (string, error) {
 	if err != nil {
 		return "", errors.New("Error (IU-020102): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Printf("sDec: %s\n", sDec)
 
 	// строка в win-1251
 	sr := strings.NewReader(string(sDec))

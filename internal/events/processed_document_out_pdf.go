@@ -15,7 +15,6 @@ func Processed_Document_Out_Pdf() error {
 	// ----- формируем текст запроса -----
 	requestText := fmt.Sprintf("SELECT ROW_ID, DocumentID FROM [Document.Out] (NOLOCK) "+
 		"WHERE (DocumentStatus = 'Signed') AND (PdfReceived = 0) AND (ROW_ID >= 3119) AND (Service = '%s') AND (Account = '%s') ORDER BY ROW_ID", Cfg.Service, Cfg.Account)
-	//fmt.Println(requestText)
 
 	// выполнение запроса
 	rows, err := DB.DB_COURIER.Query(requestText)
@@ -34,7 +33,6 @@ func Processed_Document_Out_Pdf() error {
 		if err != nil {
 			return errors.New("Error (EV-040102): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Printf("%d  %s\n", ROW_ID, DocumentID)
 
 		_, err = GetDocumentPdf(DocumentID, "Document.Out", 1)
 		if err != nil {

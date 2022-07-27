@@ -48,7 +48,6 @@ func Export_Signed_TicketReply_FromFiles() error {
 		signatureName := fmt.Sprintf("%s%s", name, ".sgn")
 		signatureFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, signatureName)
 
-		//fmt.Println(signatureName)
 		fmt.Println(signatureFullName)
 
 		// пропускаем файлы для которых не найдена подпись
@@ -88,7 +87,6 @@ func Export_Signed_TicketReply_FromFiles() error {
 
 		replyNoticeName := fmt.Sprintf("%sNotice", name)
 		replyNoticeFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, replyNoticeName)
-		//fmt.Println(replyNoticeFullName)
 
 		// ----- пропускаем файлы для которых найден файл ответа подтверждения квитанции -----
 		if _, err := os.Stat(replyNoticeFullName); err == nil {
@@ -107,11 +105,9 @@ func Export_Signed_TicketReply_FromFiles() error {
 		if err != nil {
 			continue
 		}
-		//fmt.Println(string(fileContent))
 
 		// ----- кодируем содержимое в base64 -----
 		data64 := base64.StdEncoding.EncodeToString(fileContent)
-		//fmt.Println("data64: " + data64)
 
 		// ----- читаем содержимое подписи -----
 		file2, err := os.Open(signatureFullName)
@@ -137,7 +133,6 @@ func Export_Signed_TicketReply_FromFiles() error {
 			fmt.Printf("Error (TU-050102): %s\n", err)
 			continue
 		}
-		//fmt.Println(receiveNoticeContent)
 
 		// сохраним ответ подтверждения квитанции в файл
 		f, err := os.Create(replyNoticeFullName)
@@ -180,7 +175,6 @@ func Export_Signed_TicketReply_FromFiles() error {
 // 04
 func SendTicketToCourier(id string, SignedContent Models.SignedContentOptions) (string, error) {
 
-	//fmt.Println("*****************************************************************************************************************************")
 	url := Cfg.ServiceURL + "/api/tickets/add/" + id
 	fmt.Println(url)
 
@@ -189,13 +183,11 @@ func SendTicketToCourier(id string, SignedContent Models.SignedContentOptions) (
 	if err != nil {
 		return "", errors.New("Error (TU-050201): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(string(value))
 
 	data, err := Web.SendPostRequest(url, string(value), "application/json", Cfg.TOKEN)
 	if err != nil {
 		return "", errors.New("Error (TU-050202): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	return data, nil
 }

@@ -45,7 +45,6 @@ func CreateSignatures() error {
 		signatureName := fmt.Sprintf("%s%s", name, ".sgn")
 		signatureFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, signatureName)
 
-		//fmt.Println(signatureName)
 		fmt.Println(signatureFullName)
 
 		// пропускаем файлы для которых найденa подпись

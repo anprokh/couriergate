@@ -17,7 +17,6 @@ func MoveCompletedDocumentsToArchiveFolder() error {
 
 	name := time.Now().Format("2006-01-02")
 	subdirFullName := fmt.Sprintf("%s\\COURIER-%s", Cfg.ExPath, name)
-	//fmt.Println(subdirFullName)
 
 	// создаем каталог если он не существует
 	if _, err := os.Stat(subdirFullName); err != nil {
@@ -54,14 +53,10 @@ func MoveCompletedDocumentsToArchiveFolder() error {
 	for _, name := range fileNames {
 
 		responseFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, name)
-		//fmt.Println(responseFullName)
 
 		// ----- определяем имя файла подписи -----
 		signatureName := strings.Replace(name, ".xml.Document", ".xml.sgn", -1)
 		signatureFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, signatureName)
-
-		//fmt.Println(signatureName)
-		//fmt.Println(signatureFullName)
 
 		// если файл подписи не существует, значит что-то пошло не так...
 		if _, err := os.Stat(signatureFullName); err != nil {
@@ -71,8 +66,6 @@ func MoveCompletedDocumentsToArchiveFolder() error {
 		// ----- определяем имя исходящего файла -----
 		fileName := strings.Replace(name, ".xml.Document", ".xml", -1)
 		fileFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, fileName)
-		//fmt.Println(fileName)
-		//fmt.Println(fileFullName)
 
 		// если файл не существует, значит что-то пошло не так...
 		if _, err := os.Stat(fileFullName); err != nil {

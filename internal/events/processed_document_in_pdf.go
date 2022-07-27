@@ -16,7 +16,6 @@ func Processed_Document_In_Pdf() error {
 	// ----- формируем текст запроса -----
 	requestText := fmt.Sprintf("SELECT ROW_ID, DocumentID, ISNULL(ActionProcessed, getdate()) AS ActionProcessed FROM [Document.In] (NOLOCK) "+
 		"WHERE (Action = 'Accept') AND (PdfReceived = 0) AND (Service = '%s') AND (Account = '%s') ORDER BY ROW_ID", Cfg.Service, Cfg.Account)
-	//fmt.Println(requestText)
 
 	// выполнение запроса
 	rows, err := DB.DB_COURIER.Query(requestText)
@@ -37,7 +36,6 @@ func Processed_Document_In_Pdf() error {
 		if err != nil {
 			return errors.New("Error (EV-070102): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Printf("(1)  %d  %s  %s\n", ROW_ID, DocumentID, ActionProcessed)
 		ActionProcessed = ActionProcessed[:19]
 
 		// ----- обеспечиваем задержку 120 сек на прикрепление подписи в Courier -----
@@ -46,13 +44,11 @@ func Processed_Document_In_Pdf() error {
 		if err != nil {
 			return errors.New("Error (EV-070103): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Println(actionTime)
 
 		// компенсируем разницу между UTC и MSK
 		actionTime = actionTime.Add(time.Hour * -3)
 
 		t1 := time.Now()
-		//fmt.Println(t1)
 
 		diff := t1.Sub(actionTime).Seconds()
 		fmt.Printf("diff:  %f\n", diff)

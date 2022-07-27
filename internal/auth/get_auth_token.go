@@ -17,18 +17,16 @@ func GetAuthTokenByApiKey() (string, error) {
 
 	data, err := Web.SendPostRequest(url, "", "application/json", "")
 	if err != nil {
-		return "", errors.New("Error (EU-030101): " + fmt.Sprintf("%s\n", err))
+		return "", errors.New("Error (AT-010101): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	var LogonResponse Models.LogonResponseOptions
 
 	if err = json.Unmarshal([]byte(data), &LogonResponse); err != nil {
-		return "", errors.New("Error (EU-030102): " + fmt.Sprintf("%s\n", err))
+		return "", errors.New("Error (AT-010102): " + fmt.Sprintf("%s\n", err))
 	}
 
 	token := LogonResponse.Token
-	//fmt.Printf(">%s<\n", token)
 
 	return token, nil
 }

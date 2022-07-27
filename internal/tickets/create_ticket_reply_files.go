@@ -66,14 +66,12 @@ func CreateTicketReplyFiles() error {
 			var x1 = strings.Split(name, ".")
 			ticketId = x1[0]
 		}
-		//fmt.Printf("ticketId: %s\n", ticketId)
 
 		ticketReply, err := Get_Ticket_Reply(ticketId) // структура SignedContent
 		if err != nil {
 			fmt.Printf("Error (TU-040102): %s\n", err)
 			continue
 		}
-		//fmt.Printf("ticketReply: %s\n", ticketReply)
 
 		data64 := ticketReply.Content
 
@@ -82,7 +80,6 @@ func CreateTicketReplyFiles() error {
 		if err != nil {
 			return errors.New("Error (TU-040103): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Printf("sDec: %s\n", sDec)
 
 		f, err := os.Create(replyFullName)
 		if err != nil {
@@ -137,12 +134,10 @@ func Get_Ticket_Reply(ticketId string) (Models.SignedContentOptions, error) {
 	if err != nil {
 		return TicketReplyData, errors.New("Error (TU-040201): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	if err = json.Unmarshal([]byte(data), &TicketReplyData); err != nil {
 		return TicketReplyData, errors.New("Error (TU-040202): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Printf("***** TicketReplyData: %s\n", TicketReplyData)
 
 	return TicketReplyData, nil
 }

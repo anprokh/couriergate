@@ -15,7 +15,6 @@ func Processed_Document_In_Signatures() error {
 	// ----- формируем текст запроса -----
 	requestText := fmt.Sprintf("SELECT ROW_ID, DocumentID FROM [Document.In] (NOLOCK) "+
 		"WHERE (Action = 'Accept') AND (SignReceived = 0) AND (Service = '%s') AND (Account = '%s') ORDER BY ROW_ID", Cfg.Service, Cfg.Account)
-	//fmt.Println(requestText)
 
 	// выполнение запроса
 	rows, err := DB.DB_COURIER.Query(requestText)
@@ -34,7 +33,6 @@ func Processed_Document_In_Signatures() error {
 		if err != nil {
 			return errors.New("Error (EV-080102): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Printf("%d  %s\n", ROW_ID, DocumentID)
 
 		err = GetSellerSignatureByTicketsTickets(DocumentID)
 		if err != nil {

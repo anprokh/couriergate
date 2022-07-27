@@ -19,7 +19,6 @@ func CreateClarificationFiles() error {
 
 	// ----- формируем текст запроса -----
 	requestText := fmt.Sprintf("SELECT ROW_ID, DocumentID, ISNULL (RejectionReason, 'ошибка обработки') FROM [Document.In] (NOLOCK) WHERE (Action = 'Clarification') AND (ResponseFileCreated = 0) AND (Service = '%s') AND (Account = '%s')", Cfg.Service, Cfg.Account)
-	//fmt.Println(requestText)
 
 	// выполнение запроса
 	rows, err := DB.DB_COURIER.Query(requestText)
@@ -41,7 +40,6 @@ func CreateClarificationFiles() error {
 		//fmt.Printf("%d  %s : %s\n", ROW_ID, DocumentID, RejectionReason)
 
 		url := Cfg.ServiceURL + "/api/tickets/createclarification/" + fmt.Sprintf("%s", DocumentID)
-		//fmt.Println(url)
 
 		RejectionReason = strings.Replace(RejectionReason, "\"", "\\\"", -1)
 		requestBody := fmt.Sprintf("{ \"comment\":\"%s\" }", RejectionReason)
@@ -50,7 +48,6 @@ func CreateClarificationFiles() error {
 		if err != nil {
 			return errors.New("Error (CU-010103): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Println(data)
 
 		var FileContentData Models.SignedContentOptions
 
@@ -58,7 +55,6 @@ func CreateClarificationFiles() error {
 			fmt.Printf("Error (CU-010104): convert post data to SignedContentOptions type failure")
 			continue
 		}
-		//fmt.Printf("FileContentData: %s\n", FileContentData)
 
 		Filename := FileContentData.FileName
 		data64 := FileContentData.Content
@@ -68,7 +64,6 @@ func CreateClarificationFiles() error {
 		if err != nil {
 			return errors.New("Error (CU-010105): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Printf("sDec: %s\n", sDec)
 
 		// ----- записываем xml-файл документа -----
 		fullFileName := fmt.Sprintf("%s\\%s.%s.Clarification", Cfg.ExPath, Filename, DocumentID)

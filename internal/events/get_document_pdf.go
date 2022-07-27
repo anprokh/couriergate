@@ -21,15 +21,12 @@ func GetDocumentPdf(sourceID string, tableName string, setPdfReceived int) (stri
 	if err != nil {
 		return "", errors.New("Error (EV-030101): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	if err = json.Unmarshal([]byte(data), &FileContent); err != nil {
 		return "", errors.New("Error (EV-030102): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Printf("FileContent: %s\n", FileContent)
 
 	data64 := FileContent.Content
-	//fmt.Printf("CNT:%s\n", data64)
 
 	// ----- записываем pdf base64 в таблицу, устанавливаем флаг получения pdf файла -----
 	_, err = DB.DB_COURIER.Exec("UPDATE ["+tableName+"] SET PdfBase64 = @p1, PdfReceived = @p2 WHERE Service = @p3 AND DocumentID = @p4", data64, setPdfReceived, Cfg.Service, sourceID)

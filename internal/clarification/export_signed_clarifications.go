@@ -47,7 +47,6 @@ func Export_Signed_Clarifications_FromFiles() error {
 		signatureName := fmt.Sprintf("%s%s", name, ".sgn")
 		signatureFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, signatureName)
 
-		//fmt.Println(signatureName)
 		fmt.Println(signatureFullName)
 
 		// пропускаем файлы для которых не найдена подпись
@@ -67,11 +66,9 @@ func Export_Signed_Clarifications_FromFiles() error {
 		if err != nil {
 			continue
 		}
-		//fmt.Println(string(fileContent))
 
 		// ----- кодируем содержимое в base64 -----
 		data64 := base64.StdEncoding.EncodeToString(fileContent)
-		//fmt.Println("data64: " + data64)
 
 		var file2 *os.File
 		var signatureContent []byte
@@ -89,7 +86,6 @@ func Export_Signed_Clarifications_FromFiles() error {
 			continue
 		}
 		signature64 = fmt.Sprintf("%s", signatureContent)
-		//fmt.Printf("signature64:\n%s", signature64)
 
 		// ----- выделяем из имени файла УОУ имя исходного файла -----
 		var i = strings.Index(name, ".xml.")
@@ -118,7 +114,6 @@ func Export_Signed_Clarifications_FromFiles() error {
 			fmt.Printf("Error (CU-030102): %s\n", err)
 			continue
 		}
-		//fmt.Printf("data: %s\n", data)
 
 		// ----- удаляем файлы отправленного УОУ -----
 		file1.Close()
@@ -150,20 +145,17 @@ func Export_Signed_Clarifications_FromFiles() error {
 // 02
 func SendClarificationToCourier(documentID string, SignedContent Models.SignedContentOptions) (string, error) {
 
-	//fmt.Println("*****************************************************************************************************************************")
 	url := Cfg.ServiceURL + "/api/document/requestClarification/" + documentID
 
 	value, err := json.Marshal(SignedContent)
 	if err != nil {
 		return "", errors.New("Error (CU-030201): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(string(value))
 
 	data, err := Web.SendPostRequest(url, string(value), "application/json", Cfg.TOKEN)
 	if err != nil {
 		return "", errors.New("Error (CU-030202): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	return data, nil
 }

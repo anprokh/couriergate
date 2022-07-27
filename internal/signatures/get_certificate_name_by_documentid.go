@@ -12,7 +12,6 @@ import (
 func GetCertificateNameByDocumentID(documentID string) (string, error) {
 
 	requestText := fmt.Sprintf("SELECT ISNULL (Certificate, '') FROM [Document.In] (NOLOCK) WHERE (Service = '%s') AND (DocumentID = %s) ORDER BY ROW_ID", Cfg.Service, documentID)
-	//fmt.Println(requestText)
 
 	// выполнение запроса
 	rows, err := DB.DB_COURIER.Query(requestText)
@@ -30,7 +29,6 @@ func GetCertificateNameByDocumentID(documentID string) (string, error) {
 		if err != nil {
 			return "", errors.New("Error (SU-030102): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Printf("%s\n", certificateName)
 	}
 
 	return certificateName, nil

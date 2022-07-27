@@ -20,7 +20,6 @@ func Get_Ticket_Index() ([]Models.TicketIndexOptions, error) {
 	if err != nil {
 		return result, errors.New("Error (TU-010101): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	if err = json.Unmarshal([]byte(data), &result); err != nil {
 		return result, errors.New("Error (TU-010102): " + fmt.Sprintf("%s\n", err))

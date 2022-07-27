@@ -20,12 +20,10 @@ func GetDocumentDetails(sourceID string) (Models.DocumentDetailsOptions, error) 
 	if err != nil {
 		return DocumentData, errors.New("Error (IU-010101): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	if err = json.Unmarshal([]byte(data), &DocumentData); err != nil {
 		return DocumentData, errors.New("Error (IU-010102): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Printf("DocumentData: %s\n", DocumentData)
 
 	return DocumentData, nil
 }

@@ -1,12 +1,9 @@
 package accept
 
 import (
-	Cfg "couriergate/configs"
-
-	Sign "couriergate/internal/signatures"
-
 	"bytes"
-
+	Cfg "couriergate/configs"
+	Sign "couriergate/internal/signatures"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -41,13 +38,11 @@ func CreateAcceptTitleSignatures() error {
 	for _, name := range fileNames {
 
 		filepath := fmt.Sprintf("%s\\%s", Cfg.ExPath, name)
-		//fmt.Println(filepath)
 
 		// ----- определяем имя файла подписи -----
 		signatureName := fmt.Sprintf("%s%s", name, ".sgn")
 		signatureFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, signatureName)
 
-		//fmt.Println(signatureName)
 		fmt.Println(signatureFullName)
 
 		// пропускаем файлы для которых найденa подпись
@@ -88,10 +83,6 @@ func CreateAcceptTitleSignatures() error {
 			fmt.Println(err)
 			continue
 		}
-
-		//fmt.Println(documentID)
-		//fmt.Println(certificateName)
-		//fmt.Println(pin)
 
 		// запускаем приложение cryptcp, подписываем файл
 		appFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, "cryptcp.x64.exe")

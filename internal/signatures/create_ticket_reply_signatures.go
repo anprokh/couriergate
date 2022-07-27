@@ -68,7 +68,6 @@ func CreateTicketReplySignatures() error {
 		signatureName := fmt.Sprintf("%s%s", name, ".sgn")
 		signatureFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, signatureName)
 
-		//fmt.Println(signatureName)
 		fmt.Println(signatureFullName)
 
 		// пропускаем файлы для которых найденa подпись
@@ -92,7 +91,6 @@ func CreateTicketReplySignatures() error {
 		err = cmd.Wait()
 
 		fmt.Printf("Command finished with error: %v\n", err)
-		//fmt.Printf("Command finished with output: %v\n", buf.String())
 
 		i = strings.Index(name, "PDPOL")
 		if i == -1 {

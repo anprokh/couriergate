@@ -20,12 +20,10 @@ func GetTicketsTickets(sourceID string) ([]Models.TicketDetailsOptions, error) {
 	if err != nil {
 		return TicketDetailsArr, errors.New("Error (IU-040101): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	if err = json.Unmarshal([]byte(data), &TicketDetailsArr); err != nil {
 		return TicketDetailsArr, errors.New("Error (IU-040102): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Printf("TicketDetailsArr: %s\n", TicketDetailsArr)
 
 	return TicketDetailsArr, nil
 }

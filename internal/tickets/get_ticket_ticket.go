@@ -21,12 +21,10 @@ func Get_Ticket_Ticket(TI Models.TicketIndexOptions) (Models.TicketDetailsOption
 	if err != nil {
 		return TicketData, errors.New("Error (TU-020101): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	if err = json.Unmarshal([]byte(data), &TicketData); err != nil {
 		return TicketData, errors.New("Error (TU-020102): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Printf("TicketData: %s\n", TicketData)
 
 	return TicketData, nil
 }

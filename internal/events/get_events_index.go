@@ -28,8 +28,6 @@ func Get_Events_Index() error {
 			return errors.New("Error (EV-010102): " + fmt.Sprintf("%s\n", err))
 		}
 	}
-	//fmt.Printf("id: %d\n", id)
-	//id++
 
 	var DocumentEventsArr []Models.DocumentEventOptions
 
@@ -40,12 +38,10 @@ func Get_Events_Index() error {
 	if err != nil {
 		return errors.New("Error (EV-010103): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	if err = json.Unmarshal([]byte(data), &DocumentEventsArr); err != nil {
 		return errors.New("Error (EV-010104): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Printf("DocumentEventsArr: %s\n", DocumentEventsArr)
 
 	for _, E := range DocumentEventsArr {
 		//fmt.Printf("%d : %s\n", i, E)

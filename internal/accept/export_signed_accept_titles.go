@@ -1,14 +1,10 @@
 package accept
 
 import (
-	Models "couriergate/models"
-
 	Cfg "couriergate/configs"
-
-	Web "couriergate/internal/web"
-
 	DB "couriergate/internal/db"
-
+	Web "couriergate/internal/web"
+	Models "couriergate/models"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
@@ -51,7 +47,6 @@ func Export_Signed_AcceptTitles_FromFiles() error {
 		signatureName := fmt.Sprintf("%s%s", name, ".sgn")
 		signatureFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, signatureName)
 
-		//fmt.Println(signatureName)
 		fmt.Println(signatureFullName)
 
 		// пропускаем файлы для которых не найдена подпись
@@ -75,7 +70,6 @@ func Export_Signed_AcceptTitles_FromFiles() error {
 
 		// ----- кодируем содержимое в base64 -----
 		data64 := base64.StdEncoding.EncodeToString(fileContent)
-		//fmt.Println("data64: " + data64)
 
 		var file2 *os.File
 		var signatureContent []byte
@@ -93,7 +87,6 @@ func Export_Signed_AcceptTitles_FromFiles() error {
 			continue
 		}
 		signature64 = fmt.Sprintf("%s", signatureContent)
-		//fmt.Printf("signature64:\n%s", signature64)
 
 		// ----- выделяем из имени файла ТП имя исходного файла -----
 		var i = strings.Index(name, ".xml.")
@@ -111,14 +104,6 @@ func Export_Signed_AcceptTitles_FromFiles() error {
 		}
 		documentID := name[(i + 5):j]
 
-		//		data, err := SendAcceptToCourier(cfg, documentID)
-		//		if err != nil {
-		//			fmt.Printf("Error (AU-040102): %s\n", err)
-		//			continue
-		//		}
-		//		fmt.Printf("data: %s\n", data)
-		//continue
-
 		// ----- сформируем SignedContent -----
 		var signedContent Models.SignedContentOptions
 		signedContent.Content = data64
@@ -130,7 +115,6 @@ func Export_Signed_AcceptTitles_FromFiles() error {
 			fmt.Printf("Error (AU-040102): %s\n", err)
 			continue
 		}
-		//fmt.Printf("data: %s\n", data)
 
 		// ----- регистрируем время экспорта титула -----
 		DATE_TIME := time.Now().String()
@@ -162,7 +146,6 @@ func Export_Signed_AcceptTitles_FromFiles() error {
 // 02
 func SendAcceptTitleToCourier(documentID string, SignedContent Models.SignedContentOptions) (string, error) {
 
-	//fmt.Println("*****************************************************************************************************************************")
 	url := Cfg.ServiceURL + "/api/document/accept/" + documentID
 	fmt.Println(url)
 
@@ -170,13 +153,11 @@ func SendAcceptTitleToCourier(documentID string, SignedContent Models.SignedCont
 	if err != nil {
 		return "", errors.New("Error (AU-040201): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(string(value))
 
 	data, err := Web.SendPostRequest(url, string(value), "application/json", Cfg.TOKEN)
 	if err != nil {
 		return "", errors.New("Error (AU-040202): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Println(data)
 
 	return data, nil
 }

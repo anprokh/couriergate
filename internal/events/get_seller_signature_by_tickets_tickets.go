@@ -16,7 +16,6 @@ func GetSellerSignatureByTicketsTickets(sourceID string) error {
 	if err != nil {
 		return errors.New("Error (EV-090101): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Printf("%s\n", ticketDetailsArr)
 
 	for _, v := range ticketDetailsArr {
 		// UpdInvoiceSellerInfo

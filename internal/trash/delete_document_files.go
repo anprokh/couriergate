@@ -33,22 +33,16 @@ func DeleteDocumentFiles() error {
 	}
 
 	for _, documentName := range fileNames {
-		//fmt.Println(documentName)
 
 		signatureName := strings.Replace(documentName, ".xml.Document", ".xml.sgn", -1)
-		//fmt.Println(signatureName)
 
 		fileName := strings.Replace(documentName, ".xml.Document", ".xml", -1)
-		//fmt.Println(fileName)
 
 		documentFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, documentName)
-		//fmt.Println(documentFullName)
 
 		signatureFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, signatureName)
-		//fmt.Println(signatureFullName)
 
 		fileFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, fileName)
-		//fmt.Println(fileFullName)
 
 		// пропускаем файлы для которых не найдена подпись
 		if _, err := os.Stat(signatureFullName); os.IsNotExist(err) {
@@ -63,13 +57,10 @@ func DeleteDocumentFiles() error {
 		}
 
 		newDocumentFullName := fmt.Sprintf("%s\\Archive\\%s", Cfg.ExPath, documentName)
-		//fmt.Println(newDocumentFullName)
 
 		newSignatureFullName := fmt.Sprintf("%s\\Archive\\%s", Cfg.ExPath, signatureName)
-		//fmt.Println(newSignatureFullName)
 
 		newFileFullName := fmt.Sprintf("%s\\Archive\\%s", Cfg.ExPath, fileName)
-		//fmt.Println(newFileFullName)
 
 		err := os.Rename(documentFullName, newDocumentFullName)
 		if err != nil {

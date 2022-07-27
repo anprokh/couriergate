@@ -24,7 +24,6 @@ func GetDocumentCardNew(fileName string, content64 string, signature64 string, T
 
 	DATE_TIME := t.String()
 	DATE_TIME = fmt.Sprintf("%sT%s.9632729+03:00", DATE_TIME[:10], DATE_TIME[11:19])
-	//fmt.Printf("DATE_TIME: >%s<\n", DATE_TIME)
 
 	documentCard.Number = DOCNO
 	documentCard.Date = DATE_TIME
@@ -49,7 +48,6 @@ func GetDocumentCard(fileName string, content64 string, signature64 string, Type
 
 	DATE_TIME := t.String()
 	DATE_TIME = fmt.Sprintf("%sT%s.9632729+03:00", DATE_TIME[:10], DATE_TIME[11:19])
-	//fmt.Printf("DATE_TIME: >%s<\n", DATE_TIME)
 
 	documentCard := "<DocumentCard>\n" +
 		"<Number>" + DOCNO + "</Number>\n" +
@@ -70,9 +68,6 @@ func GetDocumentCard(fileName string, content64 string, signature64 string, Type
 
 	documentCard = documentCard +
 		"</DocumentCard>"
-
-	//fmt.Println("----------------------------------------------------------------------------------------------------------------------")
-	//fmt.Println(documentCard)
 
 	return documentCard, nil
 }

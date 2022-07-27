@@ -128,7 +128,6 @@ func GetUniversalDocumentAcceptInfo(certificateName string) (string, error) {
 	if err != nil {
 		return "", errors.New("Error (AU-020102): " + fmt.Sprintf("%s\n", err))
 	}
-	//fmt.Printf("%s\n", data)
 
 	return fmt.Sprintf("%s", data), nil
 }

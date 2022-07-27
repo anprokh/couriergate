@@ -19,11 +19,7 @@ func CreateTicketFiles() error {
 		return errors.New("Error (TU-030101): " + fmt.Sprintf("%s\n", err))
 	}
 
-	//data1, _ := json.Marshal(data)
-	//fmt.Println(string(data1))
-
 	for _, TI := range data {
-		//fmt.Printf("%d : %s\n", i, TI)
 
 		var ticketType string
 		switch TI.Type {
@@ -65,7 +61,6 @@ func CreateTicketFiles() error {
 		if err != nil {
 			return errors.New("Error (TU-030103): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Printf("sDec: %s\n", sDec)
 
 		f, err := os.Create(ticketFullName)
 		if err != nil {

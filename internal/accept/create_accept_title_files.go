@@ -18,8 +18,6 @@ func CreateAcceptTitleFiles() error {
 
 	// ----- формируем текст запроса -----
 	requestText := fmt.Sprintf("SELECT ROW_ID, DocumentID, ISNULL (Certificate, '') FROM [Document.In] (NOLOCK) WHERE (Action = 'Accept') AND (ResponseFileCreated = 0) AND (Service = '%s') AND (Account = '%s')", Cfg.Service, Cfg.Account)
-	//requestText = fmt.Sprintf("SELECT ROW_ID, DocumentID, ISNULL (Certificate, '') FROM [Document.In] (NOLOCK) WHERE ROW_ID = 2805")
-	//fmt.Println(requestText)
 
 	// выполнение запроса
 	rows, err := DB.DB_COURIER.Query(requestText)
@@ -44,7 +42,6 @@ func CreateAcceptTitleFiles() error {
 		if err != nil {
 			return errors.New("Error (AU-010103): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Println(universalDocumentAcceptInfo)
 
 		url := Cfg.ServiceURL + "/v2.0/document/" + fmt.Sprintf("%s", DocumentID) + "/acceptTitle"
 
@@ -55,13 +52,11 @@ func CreateAcceptTitleFiles() error {
 			url = Cfg.ServiceURL + "/api/v2.0/document/" + fmt.Sprintf("%s", DocumentID) + "/acceptTitle"
 		default:
 		}
-		//fmt.Println(url)
 
 		data, err := Web.SendPostRequest(url, universalDocumentAcceptInfo, "application/json", Cfg.TOKEN)
 		if err != nil {
 			return errors.New("Error (AU-010104): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Println(data)
 
 		var FileContentData Models.SignedContentOptions
 
@@ -69,7 +64,6 @@ func CreateAcceptTitleFiles() error {
 			fmt.Printf("Error (AU-010105): convert post data to FileContentOptions type failure")
 			continue
 		}
-		//fmt.Printf("FileContentData: %s\n", FileContentData)
 
 		Filename := FileContentData.FileName
 		data64 := FileContentData.Content
@@ -79,7 +73,6 @@ func CreateAcceptTitleFiles() error {
 		if err != nil {
 			return errors.New("Error (AU-010106): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Printf("sDec: %s\n", sDec)
 
 		// ----- записываем xml-файл документа -----
 		fullFileName := fmt.Sprintf("%s\\%s.%s.AcceptTitle", Cfg.ExPath, Filename, DocumentID)

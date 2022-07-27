@@ -14,9 +14,7 @@ import (
 func CreateFilesForSignature() error {
 
 	// ----- формируем текст запроса -----
-	//requestText := fmt.Sprintf("SELECT FileContent, ISNULL (FileID, '') FROM [Document.Out] (NOLOCK) WHERE (Service = '%s') AND (Account = '%s')", cfg.Service, cfg.Account)
 	requestText := fmt.Sprintf("SELECT FileContent, ISNULL (FileID, '') FROM [Document.Out] (NOLOCK) WHERE (FileCreated = 0) AND (Service = '%s') AND (Account = '%s')", Cfg.Service, Cfg.Account)
-	//fmt.Println(requestText)
 
 	// выполнение запроса
 	rows, err := DB.DB_COURIER.Query(requestText)
@@ -34,8 +32,6 @@ func CreateFilesForSignature() error {
 		if err != nil {
 			return errors.New("Error (EU-010102): " + fmt.Sprintf("%s\n", err))
 		}
-		//fmt.Printf("%s : %s\n", FileID, FileContent)
-		//fmt.Printf("%s : %s\n", FileID, "")
 
 		// ----- записываем xml-файл документа -----
 		fullFileName := fmt.Sprintf("%s\\%s.xml", Cfg.ExPath, FileID)

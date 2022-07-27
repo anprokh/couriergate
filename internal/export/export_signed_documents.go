@@ -64,13 +64,11 @@ func Export_Signed_Documents_FromFiles() error {
 			fmt.Println("Draft file definitely exists! ... send a document as a draft")
 			isDraft = true
 		}
-		//fmt.Printf("isDraft: %t\n", isDraft)
 
 		// ----- определяем имя файла подписи -----
 		signatureName := fmt.Sprintf("%s%s", name, ".sgn")
 		signatureFullName := fmt.Sprintf("%s\\%s", Cfg.ExPath, signatureName)
 
-		//fmt.Println(signatureName)
 		fmt.Println(signatureFullName)
 
 		// пропускаем файлы для которых не найдена подпись
@@ -92,11 +90,9 @@ func Export_Signed_Documents_FromFiles() error {
 		if err != nil {
 			continue
 		}
-		//fmt.Println(string(fileContent))
 
 		// ----- кодируем содержимое в base64 -----
 		data64 := base64.StdEncoding.EncodeToString(fileContent)
-		//fmt.Println("data64: " + data64)
 
 		// ---------- Определяем функцию документа из текста файла ----------
 
@@ -115,7 +111,7 @@ func Export_Signed_Documents_FromFiles() error {
 
 		for scanner.Scan() { // internally, it advances token based on sperator
 			nextLine = scanner.Text()
-			//			fmt.Println(nextLine)  // token in unicode-char
+			//fmt.Println(nextLine)  // token in unicode-char
 
 			i = strings.Index(nextLine, "<Документ")
 			if i >= 0 {
@@ -150,7 +146,6 @@ func Export_Signed_Documents_FromFiles() error {
 			continue
 		}
 		signature64 = fmt.Sprintf("%s", signatureContent)
-		//fmt.Printf("signature64:\n%s", signature64)
 
 		// ----- сформируем DocumentCard -----
 	A:
@@ -163,7 +158,6 @@ func Export_Signed_Documents_FromFiles() error {
 		// ----- определяем идентификатор получателя из имени файла -----
 		var x1 = strings.Split(name, "_")
 		destinationID := x1[2]
-		//fmt.Printf("destinationID:\n%s\n", destinationID)
 
 		//destinationID := "2BK-3437014240-49459"
 		//destinationID = "2BM-7703270067-2013012406531229784200000000000"  // Ашан
@@ -230,7 +224,6 @@ func CreateResponseFile(fileName string, extension string, fileContent string) e
 
 	fileContent1251, err := enc.String(fileContent)
 	if err != nil {
-		//fmt.Println("ERROR (EU-010202): " + err.Error())
 
 		// вероятно встретилась некорректная руна, пытаемся преобразовать посимвольно
 		tmp := ""
@@ -248,7 +241,6 @@ func CreateResponseFile(fileName string, extension string, fileContent string) e
 			}
 			tmp = tmp + runeStr
 		}
-		//fmt.Printf("tmp: %s\n", tmp)
 		fileContent1251, _ = enc.String(tmp)
 	}
 
